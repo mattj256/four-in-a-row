@@ -1,4 +1,7 @@
+# Java / Gradle
 .gradle/
 build/
-
 *.class
+
+# IntelliJ
+.idea/
