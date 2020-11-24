@@ -8,6 +8,7 @@ class BoardTest {
 
     @Test
     fun getBoardString_empty() {
-        assertEquals("-------/-------/-------/-------/-------/-------", Board().getDebugBoardString())
+        assertEquals("------/------/------/------/------/------/------", Board().getDebugBoardString())
     }
+
 }
