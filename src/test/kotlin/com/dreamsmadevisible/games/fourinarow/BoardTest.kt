@@ -11,4 +11,9 @@ class BoardTest {
         assertEquals("------/------/------/------/------/------/------", Board().getDebugBoardString())
     }
 
+    @Test
+    fun move() {
+        assertEquals("-----X/------/------/------/------/------/------", Board().move(0, Player.X).getDebugBoardString())
+    }
+
 }
