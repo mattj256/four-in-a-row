@@ -1,11 +1,12 @@
 package com.dreamsmadevisible.games.fourinarow
 
-class Board {
-    val board : Array<Array<Square>> = Array(BOARD_WIDTH) {Array(BOARD_HEIGHT) { Square.EMPTY } }
+class Board() {
+    val boardString : String
 
-    fun get(col: Int, row: Int) : Square = board[col][row]
-
-    private fun set(col: Int, row: Int, value: Square) : Unit {
-        board[col][row] = value
+    init {
+        val row = "-".repeat(BOARD_WIDTH)
+        boardString = row + ("/" + row).repeat(BOARD_HEIGHT - 1)
     }
+
+    fun getDebugBoardString() : String = boardString
 }

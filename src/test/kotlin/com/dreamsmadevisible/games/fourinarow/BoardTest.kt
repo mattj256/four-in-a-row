@@ -5,9 +5,9 @@ import org.junit.Test
 import kotlin.test.assertTrue
 
 class BoardTest {
-    // TODO: remove
+
     @Test
-    fun foo() {
-        assertTrue(true)
+    fun getBoardString_empty() {
+        assertEquals("-------/-------/-------/-------/-------/-------", Board().getDebugBoardString())
     }
 }
