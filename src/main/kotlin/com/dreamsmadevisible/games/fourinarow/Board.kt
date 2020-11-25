@@ -2,13 +2,13 @@ package com.dreamsmadevisible.games.fourinarow
 
 class Board {
 
-    val boardString : String
+    private val boardString : String
 
     companion object {
-        val EMPTY_SQUARE_CHAR = "-"
-        val COLUMN_DELIMITER = "/"
-        val col = EMPTY_SQUARE_CHAR.repeat(BOARD_HEIGHT)
-        val emptyBoardString = col + ("/" + col).repeat(BOARD_WIDTH - 1)
+        private val EMPTY_SQUARE_CHAR = "-"
+        private val COLUMN_DELIMITER = "/"
+        private val col = EMPTY_SQUARE_CHAR.repeat(BOARD_HEIGHT)
+        private val emptyBoardString = col + (COLUMN_DELIMITER + col).repeat(BOARD_WIDTH - 1)
     }
 
     constructor(): this(emptyBoardString)
