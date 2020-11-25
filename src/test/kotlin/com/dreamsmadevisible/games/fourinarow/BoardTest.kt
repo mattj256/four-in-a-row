@@ -4,6 +4,7 @@ import junitparams.JUnitParamsRunner
 import junitparams.Parameters
 import kotlin.test.assertEquals
 import org.junit.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
 
 @RunWith(value = JUnitParamsRunner::class)
@@ -55,12 +56,13 @@ class BoardTest {
     )
     fun negativeMove_columnFull(row: Int, player: Player) {
         var board = Board()
-        // TODO: fix this test
-        repeat(BOARD_HEIGHT + 1) {
+        repeat(BOARD_HEIGHT) {
             board = board.move(row, player)
             println(board.getDebugBoardString())
         }
-        // board = board.move(row, player)
+        assertThrows<GameException> {
+            board = board.move(row, player)
+        }
     }
 
 }
