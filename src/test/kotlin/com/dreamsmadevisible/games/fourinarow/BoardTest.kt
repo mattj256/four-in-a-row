@@ -72,9 +72,24 @@ class BoardTest {
             "7|O"
     )
     fun negativeMove_invalidColumn(col: Int, player: Player) {
-        var board = Board()
         assertThrows<GameException> {
-            board = board.move(col, player)
+            Board().move(col, player)
         }
+    }
+
+    @Test
+    @Parameters(
+            "-----X/------/------/------/------/------/------|0",
+            "------/-----X/------/------/------/------/------|1",
+            "------/------/-----X/------/------/------/------|2",
+            "------/------/------/-----X/------/------/------|3",
+            "------/------/------/------/-----X/------/------|4",
+            "------/------/------/------/------/-----X/------|5",
+            "------/------/------/------/------/------/-----X|6",
+            "------/------/-----O/----OX/-----X/------/------|3342"
+    )
+    fun positiveMove_moveSequence(expected: String, moveSequence: String) {
+        val actual = Board().move(moveSequence).getDebugBoardString()
+        assertEquals(expected, actual)
     }
 }
