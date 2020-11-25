@@ -160,19 +160,22 @@ class BoardTest {
     @Parameters(
             "0-1-2-3-4-5-6|0",
             "3-4-5-6|012012012012012012",
-            "3-4-5-6|012012012012012012345345345",
-            "|$DRAW_POSITION"
+            "3-4-5-6|012012012012012012345345345"
     )
     fun positiveGetLegalMoves(expectedString: String, moveSequence: String) {
-        val board = Board().move(moveSequence)
-        val expected = when(expectedString) {
-            "" -> emptyList()
-            else -> expectedString
+        val expected = expectedString
                     .split("-")
                     .map { it.toInt() }
                     .toList()
-        }
-        assertEquals(expected, board.getLegalMoves())
+        assertEquals(expected, Board().move(moveSequence).getLegalMoves())
+    }
+
+    @Test
+    @Parameters(
+            DRAW_POSITION
+    )
+    fun positiveGetLegalMoves_draw(moveSequence: String) {
+        assertEquals(emptyList(), Board().move(moveSequence).getLegalMoves())
     }
 
     private fun moveSequenceMinusLastMove(moveSequence: String) =
