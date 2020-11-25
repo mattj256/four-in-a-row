@@ -128,12 +128,18 @@ class BoardTest {
             // X win - horizontal
             "0011223",
             "3344556",
+            // X win - up-right diagonal
+            "01122323433",
+            "23344545655",
             // O win - vertical
             "01010121",
             "56565606",
             // O win - horizontal
             "0011224343",
-            "3344550606"
+            "3344550606",
+            // O win - up-right diagonal
+            "601122323433",
+            "023344545655"
     )
     fun positiveIsWon(moveSequence: String) {
         assertFalse(actual = Board().move(moveSequenceMinusLastMove(moveSequence)).isWon(), message = "Should not be won: " + getDebugInfo(moveSequence))
