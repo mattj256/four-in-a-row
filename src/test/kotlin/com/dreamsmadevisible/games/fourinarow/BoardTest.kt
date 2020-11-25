@@ -54,15 +54,27 @@ class BoardTest {
             "5|O",
             "6|O"
     )
-    fun negativeMove_columnFull(row: Int, player: Player) {
+    fun negativeMove_columnFull(col: Int, player: Player) {
         var board = Board()
         repeat(BOARD_HEIGHT) {
-            board = board.move(row, player)
-            println(board.getDebugBoardString())
+            board = board.move(col, player)
         }
         assertThrows<GameException> {
-            board = board.move(row, player)
+            board = board.move(col, player)
         }
     }
 
+    @Test
+    @Parameters(
+            "-1|X",
+            "7|X",
+            "-1|O",
+            "7|O"
+    )
+    fun negativeMove_invalidColumn(col: Int, player: Player) {
+        var board = Board()
+        assertThrows<GameException> {
+            board = board.move(col, player)
+        }
+    }
 }
