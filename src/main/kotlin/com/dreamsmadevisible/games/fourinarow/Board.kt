@@ -5,8 +5,8 @@ class Board {
     private val boardString : String
 
     companion object {
-        private val EMPTY_SQUARE_CHAR = "-"
-        private val COLUMN_DELIMITER = "/"
+        private const val EMPTY_SQUARE_CHAR = "-"
+        private const val COLUMN_DELIMITER = "/"
         private val col = EMPTY_SQUARE_CHAR.repeat(BOARD_HEIGHT)
         private val emptyBoardString = col + (COLUMN_DELIMITER + col).repeat(BOARD_WIDTH - 1)
     }
@@ -18,6 +18,13 @@ class Board {
     }
 
     fun getDebugBoardString() : String = boardString
+
+    fun move(moveSequence: String): Board =
+            moveSequence
+                    .toCharArray()
+                    .foldIndexed(Board(), {
+                        index, acc, char ->  acc.move(char - '0', toPlayer(index))
+                    })
 
     fun move(colIndex: Int, player: Player) : Board {
         if (colIndex < 0 || colIndex >= BOARD_WIDTH) {
@@ -32,8 +39,14 @@ class Board {
         val stringBuilder = StringBuilder(oldCol)
         stringBuilder.setCharAt(index, player.char)
         val newCol = stringBuilder.toString()
-        cols.set(colIndex, newCol)
+        cols[colIndex] = newCol
         val newBoardString = cols.joinToString(separator = COLUMN_DELIMITER)
         return Board(newBoardString)
     }
+
+    private fun toPlayer(moveNumber: Int): Player =
+        when {
+            moveNumber % 2 == 0 -> Player.X
+            else -> Player.O
+        }
 }
