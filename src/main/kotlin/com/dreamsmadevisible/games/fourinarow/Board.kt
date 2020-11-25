@@ -61,7 +61,10 @@ class Board {
                 "O" + REGEX_SKIP_FULL_COLUMN + "O" + REGEX_SKIP_FULL_COLUMN + "O" + REGEX_SKIP_FULL_COLUMN + "O",
                 // four-in-a-row diagonally up-right
                 "X" + REGEX_SKIP_COLUMN_MINUS_ONE + "X" + REGEX_SKIP_COLUMN_MINUS_ONE + "X" + REGEX_SKIP_COLUMN_MINUS_ONE + "X",
-                "O" + REGEX_SKIP_COLUMN_MINUS_ONE + "O" + REGEX_SKIP_COLUMN_MINUS_ONE + "O" + REGEX_SKIP_COLUMN_MINUS_ONE + "O"
+                "O" + REGEX_SKIP_COLUMN_MINUS_ONE + "O" + REGEX_SKIP_COLUMN_MINUS_ONE + "O" + REGEX_SKIP_COLUMN_MINUS_ONE + "O",
+                // four-in-a-row diagonally up-right
+                "X" + REGEX_SKIP_COLUMN_PLUS_ONE + "X" + REGEX_SKIP_COLUMN_PLUS_ONE + "X" + REGEX_SKIP_COLUMN_PLUS_ONE + "X",
+                "O" + REGEX_SKIP_COLUMN_PLUS_ONE + "O" + REGEX_SKIP_COLUMN_PLUS_ONE + "O" + REGEX_SKIP_COLUMN_PLUS_ONE + "O"
         )
         return regexes
                 .map { x -> x.toRegex() }
