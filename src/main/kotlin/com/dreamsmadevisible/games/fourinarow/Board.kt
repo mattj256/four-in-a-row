@@ -1,5 +1,7 @@
 package com.dreamsmadevisible.games.fourinarow
 
+typealias Move = Int
+
 class Board {
 
     private val boardString : String
@@ -72,6 +74,13 @@ class Board {
         return regexes
                 .map { x -> x.toRegex() }
                 .any { regex -> regex.containsMatchIn(boardString) }
+    }
+
+    fun getLegalMoves(): List<Move> {
+        val cols = boardString.split(COLUMN_DELIMITER).toList()
+        return (0 until BOARD_WIDTH)
+                .filter { cols[it].startsWith(EMPTY_SQUARE_CHAR) }
+                .toList()
     }
 
     private fun toPlayer(moveNumber: Int): Player =
