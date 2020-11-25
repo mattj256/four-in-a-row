@@ -34,6 +34,9 @@ class Board {
         if (colIndex < 0 || colIndex >= BOARD_WIDTH) {
             throw GameException(GameException.INVALID_COL + colIndex)
         }
+        if (isWon()) {
+            throw GameException(GameException.ALREADY_WON)
+        }
         val cols = boardString.split(COLUMN_DELIMITER).toMutableList()
         val oldCol = cols[colIndex]
         val index = oldCol.lastIndexOf(EMPTY_SQUARE_CHAR)
