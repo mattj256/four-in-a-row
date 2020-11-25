@@ -19,14 +19,20 @@ class Board {
 
     fun getDebugBoardString() : String = boardString
 
-    fun move(row: Int, player: Player) : Board {
+    fun move(colIndex: Int, player: Player) : Board {
+        if (colIndex < 0 || colIndex >= BOARD_WIDTH) {
+            throw GameException(GameException.INVALID_COL + colIndex)
+        }
         val cols = boardString.split(COLUMN_DELIMITER).toMutableList()
-        val oldCol = cols[row]
+        val oldCol = cols[colIndex]
         val index = oldCol.lastIndexOf(EMPTY_SQUARE_CHAR)
+        if (index < 0) {
+            throw GameException(GameException.COLUMN_FULL + colIndex)
+        }
         val stringBuilder = StringBuilder(oldCol)
         stringBuilder.setCharAt(index, player.char)
         val newCol = stringBuilder.toString()
-        cols.set(row, newCol)
+        cols.set(colIndex, newCol)
         val newBoardString = cols.joinToString(separator = COLUMN_DELIMITER)
         return Board(newBoardString)
     }
