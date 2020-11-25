@@ -7,5 +7,6 @@ class GameException(override val message: String) : RuntimeException(message) {
     companion object {
         val COLUMN_FULL = "Column is full: "
         val INVALID_COL = "Invalid column: "
+        val ALREADY_WON = "Game already won."
     }
 }

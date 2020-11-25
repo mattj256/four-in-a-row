@@ -45,25 +45,14 @@ class BoardTest {
             "0|X",
             "1|X",
             "2|X",
-            "3|X",
-            "4|X",
-            "5|X",
-            "6|X",
             "0|O",
             "1|O",
-            "2|O",
-            "3|O",
-            "4|O",
-            "5|O",
-            "6|O"
+            "2|O"
     )
     fun negativeMove_columnFull(col: Int, player: Player) {
-        var board = Board()
-        repeat(BOARD_HEIGHT) {
-            board = board.move(col, player)
-        }
+        val board = Board().move("012012012012012012")
         assertThrows<GameException> {
-            board = board.move(col, player)
+            board.move(col, player)
         }
     }
 
@@ -117,8 +106,19 @@ class BoardTest {
         }
     }
 
-    // TODO: add negative tests for moveSequence that continues past the end of the game.
-    // TODO: add positive tests for winning by diagonal
+    @Test
+    @Parameters(
+            "01010101",
+            "010101216"
+            )
+    fun negativeMove_moveSequence_gameAlreadyWon(moveSequence: String) {
+        assertDoesNotThrow {
+            Board().move(moveSequenceMinusLastMove(moveSequence))
+        }
+        assertThrows<GameException> {
+            Board().move(moveSequence)
+        }
+    }
 
     @Test
     @Parameters(
