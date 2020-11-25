@@ -13,6 +13,10 @@ import kotlin.test.assertTrue
 @RunWith(value = JUnitParamsRunner::class)
 class BoardTest {
 
+    companion object {
+        const val DRAW_POSITION = "000000111111322222233333444444655555566666"
+    }
+
     @Test
     fun getBoardString_empty() {
         assertEquals("------/------/------/------/------/------/------", Board().getDebugBoardString())
@@ -155,14 +159,19 @@ class BoardTest {
     @Test
     @Parameters(
             "0-1-2-3-4-5-6|0",
-            "3-4-5-6|012012012012012012"
+            "3-4-5-6|012012012012012012",
+            "3-4-5-6|012012012012012012345345345",
+            "|$DRAW_POSITION"
     )
     fun positiveGetLegalMoves(expectedString: String, moveSequence: String) {
         val board = Board().move(moveSequence)
-        val expected = expectedString
-                .split("-")
-                .map { it.toInt() }
-                .toList()
+        val expected = when(expectedString) {
+            "" -> emptyList()
+            else -> expectedString
+                    .split("-")
+                    .map { it.toInt() }
+                    .toList()
+        }
         assertEquals(expected, board.getLegalMoves())
     }
 
