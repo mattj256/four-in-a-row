@@ -9,6 +9,8 @@ class Board {
         private const val COLUMN_DELIMITER = "/"
         private val col = EMPTY_SQUARE_CHAR.repeat(BOARD_HEIGHT)
         private val emptyBoardString = col + (COLUMN_DELIMITER + col).repeat(BOARD_WIDTH - 1)
+        //
+        private const val REGEX_SKIP_FULL_COLUMN = ".{" + BOARD_HEIGHT + "}"
     }
 
     constructor(): this(emptyBoardString)
@@ -42,6 +44,21 @@ class Board {
         cols[colIndex] = newCol
         val newBoardString = cols.joinToString(separator = COLUMN_DELIMITER)
         return Board(newBoardString)
+    }
+
+    fun isWon(): Boolean {
+        // TODO: move to companion class
+        // TODO: store Regex objects, not Strings.
+        // TODO: check only for one player?
+        val regexes = listOf<String>(
+                "XXXX",
+                "OOOO",
+                "X" + REGEX_SKIP_FULL_COLUMN + "X" + REGEX_SKIP_FULL_COLUMN + "X" + REGEX_SKIP_FULL_COLUMN + "X",
+                "O" + REGEX_SKIP_FULL_COLUMN + "O" + REGEX_SKIP_FULL_COLUMN + "O" + REGEX_SKIP_FULL_COLUMN + "O"
+        )
+        return regexes
+                .map { x -> x.toRegex() }
+                .any { regex -> regex.containsMatchIn(boardString) }
     }
 
     private fun toPlayer(moveNumber: Int): Player =

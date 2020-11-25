@@ -7,6 +7,8 @@ import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(value = JUnitParamsRunner::class)
 class BoardTest {
@@ -107,11 +109,40 @@ class BoardTest {
     fun negativeMove_moveSequence_columnFull(moveSequence: String) {
         // All moves except the last move should be legal.
         assertDoesNotThrow {
-            Board().move(moveSequence.take(moveSequence.length - 1))
+            Board().move(moveSequenceMinusLastMove(moveSequence))
         }
         // The last move is illegal.
         assertThrows<GameException> {
             Board().move(moveSequence)
         }
     }
+
+    // TODO: add negative tests for moveSequence that continues past the end of the game.
+    // TODO: add positive tests for winning by diagonal
+
+    @Test
+    @Parameters(
+            // X win - vertical
+            "0101010",
+            "1212121",
+            // X win - horizontal
+            "0011223",
+            "3344556",
+            // O win - vertical
+            "01010121",
+            "56565606",
+            // O win - horizontal
+            "0011224343",
+            "3344550606"
+    )
+    fun positiveIsWon(moveSequence: String) {
+        assertFalse(actual = Board().move(moveSequenceMinusLastMove(moveSequence)).isWon(), message = "Should not be won: " + getDebugInfo(moveSequence))
+        assertTrue(actual = Board().move(moveSequence).isWon(), message = "Should be won: " + getDebugInfo(moveSequence))
+    }
+
+    private fun moveSequenceMinusLastMove(moveSequence: String) =
+            moveSequence.take(moveSequence.length - 1)
+
+    private fun getDebugInfo(moveSequence: String) =
+            Pair<String, String>(moveSequence, Board().move(moveSequence).getDebugBoardString())
 }
