@@ -4,6 +4,7 @@ import junitparams.JUnitParamsRunner
 import junitparams.Parameters
 import kotlin.test.assertEquals
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
 
@@ -91,5 +92,26 @@ class BoardTest {
     fun positiveMove_moveSequence(expected: String, moveSequence: String) {
         val actual = Board().move(moveSequence).getDebugBoardString()
         assertEquals(expected, actual)
+    }
+
+    @Test
+    @Parameters(
+            "0000000",
+            "1111111",
+            "2222222",
+            "3333333",
+            "4444444",
+            "5555555",
+            "6666666"
+    )
+    fun negativeMove_moveSequence_columnFull(moveSequence: String) {
+        // All moves except the last move should be legal.
+        assertDoesNotThrow {
+            Board().move(moveSequence.take(moveSequence.length - 1))
+        }
+        // The last move is illegal.
+        assertThrows<GameException> {
+            Board().move(moveSequence)
+        }
     }
 }
