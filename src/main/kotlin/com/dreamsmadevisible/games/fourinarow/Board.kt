@@ -11,6 +11,8 @@ class Board {
         private val emptyBoardString = col + (COLUMN_DELIMITER + col).repeat(BOARD_WIDTH - 1)
         //
         private const val REGEX_SKIP_FULL_COLUMN = ".{" + BOARD_HEIGHT + "}"
+        private const val REGEX_SKIP_COLUMN_MINUS_ONE = ".{" + (BOARD_HEIGHT - 1) + "}"
+        private const val REGEX_SKIP_COLUMN_PLUS_ONE = ".{" + (BOARD_HEIGHT + 1) + "}"
     }
 
     constructor(): this(emptyBoardString)
@@ -51,10 +53,15 @@ class Board {
         // TODO: store Regex objects, not Strings.
         // TODO: check only for one player?
         val regexes = listOf<String>(
+                // four-in-a-row vertically
                 "XXXX",
                 "OOOO",
+                // four-in-a-row horizontally
                 "X" + REGEX_SKIP_FULL_COLUMN + "X" + REGEX_SKIP_FULL_COLUMN + "X" + REGEX_SKIP_FULL_COLUMN + "X",
-                "O" + REGEX_SKIP_FULL_COLUMN + "O" + REGEX_SKIP_FULL_COLUMN + "O" + REGEX_SKIP_FULL_COLUMN + "O"
+                "O" + REGEX_SKIP_FULL_COLUMN + "O" + REGEX_SKIP_FULL_COLUMN + "O" + REGEX_SKIP_FULL_COLUMN + "O",
+                // four-in-a-row diagonally up-right
+                "X" + REGEX_SKIP_COLUMN_MINUS_ONE + "X" + REGEX_SKIP_COLUMN_MINUS_ONE + "X" + REGEX_SKIP_COLUMN_MINUS_ONE + "X",
+                "O" + REGEX_SKIP_COLUMN_MINUS_ONE + "O" + REGEX_SKIP_COLUMN_MINUS_ONE + "O" + REGEX_SKIP_COLUMN_MINUS_ONE + "O"
         )
         return regexes
                 .map { x -> x.toRegex() }
