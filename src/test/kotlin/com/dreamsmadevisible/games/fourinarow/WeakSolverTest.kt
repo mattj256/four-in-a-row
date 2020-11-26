@@ -15,10 +15,15 @@ class WeakSolverTest {
 
    @Test
    @Parameters(
-           "334455"
+           // win in 1 ply (same player)
+           "334455|X",
+           "0334455|O",
+           // win in 2 ply (other player)
+           "33445|X",
+           "033445|O"
    )
-   fun positiveSolve_winPlayerOne(moveSequence: String) {
-      val actual = WeakSolver().solve(moveSequence)
-      assertEquals(Player.X, actual)
+   fun positiveSolve_winPlayerOne(moveSequence: String, player: Player) {
+      val actual: Player? = WeakSolver().solve(moveSequence)
+      assertEquals(player, actual)
    }
 }
