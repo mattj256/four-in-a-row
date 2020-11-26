@@ -20,7 +20,10 @@ class WeakSolverTest {
            "0334455|O",
            // win in 2 ply (other player)
            "33445|X",
-           "033445|O"
+           "033445|O",
+           "44455554221|X",
+           // win in 3 ply
+           "3344|X"
    )
    fun positiveSolve_winPlayerOne(moveSequence: String, player: Player) {
       val actual: Player? = WeakSolver().solve(moveSequence)

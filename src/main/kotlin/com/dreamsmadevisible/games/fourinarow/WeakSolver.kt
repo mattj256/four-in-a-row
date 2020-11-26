@@ -5,7 +5,7 @@ import java.lang.UnsupportedOperationException
 class WeakSolver {
 
     companion object {
-        private const val MAX_PLY = 2
+        private const val MAX_PLY = 3
     }
 
     fun solve(moveSequence: String): Player? {
