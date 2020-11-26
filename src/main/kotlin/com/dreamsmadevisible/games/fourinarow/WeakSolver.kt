@@ -4,7 +4,11 @@ import java.lang.UnsupportedOperationException
 
 class WeakSolver {
 
-    fun solve(moveSequence: String): Player {
+    companion object {
+        private const val MAX_PLY = 2
+    }
+
+    fun solve(moveSequence: String): Player? {
         val board = Board().move(moveSequence)
         val player = when {
             moveSequence.length % 2 == 0 -> Player.X
@@ -13,16 +17,24 @@ class WeakSolver {
         return solve(board, player)
     }
 
-    fun solve(board: Board, player: Player): Player {
+    private fun solve(board: Board, player: Player): Player? {
+        return solve(board, player, MAX_PLY)
+    }
+
+    private fun solve(board: Board, player: Player, plyRemaining: Int): Player? {
         val otherPlayer = player.other()
-        if (board.isWon()) {
-            return otherPlayer
+        when {
+            board.isWon() -> return otherPlayer
+            plyRemaining <= 0 -> return null
         }
-        val legalMoves: List<Move> = board.getLegalMoves()
-        if (legalMoves.any { board.move(it, player).isWon() }) {
-            return player
+
+        val results: List<Player?> = board.getLegalMoves()
+                .map { board.move(it, player) }
+                .map { solve(it, otherPlayer, plyRemaining - 1) }
+        return when {
+            results.contains(player) -> player
+            results.all { it == otherPlayer } -> otherPlayer
+            else -> null
         }
-        // TODO
-        throw UnsupportedOperationException()
     }
 }
